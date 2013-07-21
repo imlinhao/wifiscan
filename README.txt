@@ -3,5 +3,8 @@ datasets_orig:目录里面存放的是原始的实验数据集
 datasets_proc:目录里面存放的是原始的数据集以及一些对该数据集进行处理之后的中间文件
 scripts:里面存放的是一些，我们用于数据分析的脚本，目前还有点凌乱，不方便用户使用，之后整理完之后，会继续更新
 
+
+安装了wifiScan.apk的用户，运行程序之后，会在sdcard目录下生成，三个文件phone_info*，scan_results*，scan_time*；愿意贡献自己的数据集的用户，可将这三个文件打包，发送邮件至imlinhao@gmail.com，我们会把用户贡献的数据集统一放到datasets_orig目录里面。谢谢！
+
 任何问题：请联系imlinhao@gmail.com
 
