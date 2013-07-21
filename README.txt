@@ -1,0 +1,7 @@
+android_codes：该目录底下是一个android的wifi扫描的工程源码，编译之后生成的wifiScan.apk单独拿出来放到了该工程的根目录底下，方便用户下载
+datasets_orig:目录里面存放的是原始的实验数据集
+datasets_proc:目录里面存放的是原始的数据集以及一些对该数据集进行处理之后的中间文件
+scripts:里面存放的是一些，我们用于数据分析的脚本，目前还有点凌乱，不方便用户使用，之后整理完之后，会继续更新
+
+任何问题：请联系imlinhao@gmail.com
+

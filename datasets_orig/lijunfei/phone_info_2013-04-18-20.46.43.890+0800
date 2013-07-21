@@ -1,0 +1,12 @@
+Build.MODEL:HUAWEI C8650+
+Build.DEVICE:hwc8650e
+Build.DISPLAY:C8650+V100R001C92B875
+Build.BOARD:C8650E
+Build.VERSION.SDK:10
+Build.VERSION.RELEASE:2.3.6
+Phone Number:
+Phone MAC:10:C6:1F:67:3F:45
+CPU MODEL:Processor	: ARMv6-compatible processor rev 5 (v6l)
+CPU FREQUENCY:BogoMIPS	: 532.48
+CPU FREQUENCY:Features	: swp half thumb fastmult vfp edsp java 
+WiFi Connected:true

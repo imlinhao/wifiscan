@@ -1,0 +1,12 @@
+Build.MODEL:HUAWEI C8812
+Build.DEVICE:hwc8812
+Build.DISPLAY:C8812V100R001C92B921
+Build.BOARD:C8812
+Build.VERSION.SDK:15
+Build.VERSION.RELEASE:4.0.3
+Phone Number:
+Phone MAC:24:db:ac:b7:5e:fb
+CPU MODEL:Processor	: ARMv7 Processor rev 1 (v7l)
+CPU FREQUENCY:BogoMIPS	: 501.64
+CPU FREQUENCY:Features	: swp half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpv4 
+WiFi Connected:false

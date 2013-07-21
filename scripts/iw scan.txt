@@ -1,0 +1,49 @@
+COMMAND(scan, trigger, "[freq <freq>*] [ies <hex as 00:11:..>] [lowpri,flush,ap-force] [ssid <ssid>*|passive]",
+	NL80211_CMD_TRIGGER_SCAN, 0, CIB_NETDEV, handle_scan,
+	 "Trigger a scan on the given frequencies with probing for the given\n"
+	 "SSIDs (or wildcard if not given) unless passive scanning is requested.");
+
+
+#define COMMAND(section, name, args, cmd, flags, idby, handler, help)	\
+	__COMMAND(&(__section ## _ ## section), name, #name, args, cmd, flags, 0, idby, handler, help, NULL)
+
+#define __COMMAND(_section, _symname, _name, _args, _nlcmd, _flags, _hidden, _idby, _handler, _help, _sel)\
+	static struct cmd						\
+	__cmd ## _ ## _symname ## _ ## _handler ## _ ## _nlcmd ## _ ## _idby ## _ ## _hidden\
+	__attribute__((used)) __attribute__((section("__cmd")))	= {	\
+		.name = (_name),					\
+		.args = (_args),					\
+		.cmd = (_nlcmd),					\
+		.nl_msg_flags = (_flags),				\
+		.hidden = (_hidden),					\
+		.idby = (_idby),					\
+		.handler = (_handler),					\
+		.help = (_help),					\
+		.parent = _section,					\
+		.selector = (_sel),					\
+	}
+
+
+	if (!have_ssids)
+		NLA_PUT(ssids, 1, 0, "");
+	if (!passive)
+		nla_put_nested(msg, NL80211_ATTR_SCAN_SSIDS, ssids);
+
+static int ieee80211_start_sw_scan(struct ieee80211_local *local)
+{
+	/*
+	 * Hardware/driver doesn't support hw_scan, so use software
+	 * scanning instead. First send a nullfunc frame with power save
+	 * bit on so that AP will buffer the frames for us while we are not
+	 * listening, then send probe requests to each channel and wait for
+	 * the responses. After all channels are scanned, tune back to the
+	 * original channel and send a nullfunc frame with power save bit
+	 * off to trigger the AP to send us all the buffered frames.
+	 *
+	 * Note that while local->sw_scanning is true everything else but
+	 * nullfunc frames and probe requests will be dropped in
+	 * ieee80211_tx_h_check_assoc().
+	 */
+	drv_sw_scan_start(local);
+
+

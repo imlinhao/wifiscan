@@ -1,0 +1,50 @@
+#delete first multiple line of receive
+g/mCount:0/d
+
+#delete the last line if it contains 'start'
+$g/start/d
+
+set nomore 
+#trim head and tail
+##open vim then
+cd C:\Users\run\Desktop\cwsn2013\data1
+args .\**\scan_time*0800
+argdo source stat_pre_receive_num.vim | update #append the count of lines contains mCount:0  at first line
+#argdo 2,$d | update #just save first line
+argdo g/mCount:0/d | update
+argdo $g/start/d | update
+
+#extract start and save by append _start filename
+args .\**\scan_time*0800
+argdo source save_start.vim
+wq
+args .\**\scan_time*0800_start
+argdo g!/start/d | update
+wq
+args .\**\scan_time*0800_start
+argdo source save_start_only_time.vim
+wq
+args .\**\scan_time*0800_start_only_time
+argdo %s/start.*://g | update
+wq
+
+
+
+#extract receive and save by append _receive in filename
+args .\**\scan_time*0800
+argdo source save_receive.vim
+wq
+args .\**\scan_time*0800_receive
+argdo g!/receive/d | update
+wq
+args .\**\scan_time*0800_receive
+argdo source save_receive_only_time.vim
+wq
+args .\**\scan_time*0800_receive_only_time
+argdo %s/receive.*://g | update
+wq
+
+#extract scan_results IP-COM's RSS
+args .\**\scan_results*0800
+argdo g!/IP-COM/s/.*/-200/ge | update    #replace the lines don't contain IP-COM to -200
+argdo %s/.*IP-COM.\{-\}level:\(.\{-\}\),.*/\1/ge | update

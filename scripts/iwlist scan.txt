@@ -1,0 +1,68 @@
+iwlist wlan0 scanning 为driver默认扫描
+iwlist wlan0 scanning essid  ... 为主动扫描
+
+#define IW_SCAN_HACK		0x8000
+
+/* Scanning request flags */
+#define IW_SCAN_DEFAULT		0x0000	/* Default scan of the driver */
+#define IW_SCAN_ALL_ESSID	0x0001	/* Scan all ESSIDs */
+#define IW_SCAN_THIS_ESSID	0x0002	/* Scan only this ESSID */
+#define IW_SCAN_ALL_FREQ	0x0004	/* Scan all Frequencies */
+#define IW_SCAN_THIS_FREQ	0x0008	/* Scan only this Frequency */
+#define IW_SCAN_ALL_MODE	0x0010	/* Scan all Modes */
+#define IW_SCAN_THIS_MODE	0x0020	/* Scan only this Mode */
+#define IW_SCAN_ALL_RATE	0x0040	/* Scan all Bit-Rates */
+#define IW_SCAN_THIS_RATE	0x0080	/* Scan only this Bit-Rate */
+
+/* struct iw_scan_req scan_type */
+#define IW_SCAN_TYPE_ACTIVE 0
+#define IW_SCAN_TYPE_PASSIVE 1
+
+ 
+if(scanflags)
+    {
+      wrq.u.data.pointer = (caddr_t) &scanopt;
+      wrq.u.data.length = sizeof(scanopt);
+      wrq.u.data.flags = scanflags;
+    }
+  else  /* Default scan of the driver */
+    {
+      wrq.u.data.pointer = NULL;
+      wrq.u.data.flags = 0;
+      wrq.u.data.length = 0;
+    }
+
+
+return(ioctl(skfd, request, pwrq));
+ioctl 与 driver交互
+http://www.360doc.com/content/11/1031/18/7891085_160615435.shtml
+
+http://blog.csdn.net/gudulyn/article/details/573334
+https://github.com/javilonas/Lonas_KL/blob/master/drivers/net/ewrk3.c
+
+https://dev.openwrt.org/browser/trunk/package/broadcom-wl/src/wlc/ioctl.c?rev=15242
+	wl_ioctl(char *name, int cmd, void *buf, int len)
+35	{
+36	        struct ifreq ifr;
+37	        wl_ioctl_t ioc;
+38	        int ret = 0;
+39	        int s;
+40	
+41	        /* open socket to kernel */
+42	        if ((s = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+43	                perror("socket");
+44	                return errno;
+45	        }
+46	
+47	        /* do it */
+48	        ioc.cmd = cmd;
+49	        ioc.buf = buf;
+50	        ioc.len = len;
+51	        strncpy(ifr.ifr_name, name, IFNAMSIZ);
+52	        ifr.ifr_data = (caddr_t) &ioc;
+53	        if ((ret = ioctl(s, SIOCDEVPRIVATE, &ifr)) < 0)
+54	
+55	        /* cleanup */
+56	        close(s);
+57	        return ret;
+58	}

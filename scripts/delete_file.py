@@ -1,0 +1,1 @@
+import fnmatchimport os, sysext = 'scan_time*_start_only_time'basedir = 'C:/Users/run/Desktop/cwsn2013/data1'for dir1 in os.listdir(basedir):	if os.path.isdir(os.path.join(basedir, dir1)):		for filename in os.listdir(dir1):			if fnmatch.fnmatch(filename, ext):				#print(filename)				os.remove(os.path.join(dir1, filename))
