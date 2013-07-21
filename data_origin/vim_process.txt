@@ -1,5 +1,0 @@
-#delete first multiple line of receive
-g/mCount:0/d
-
-#delete the last line if it contains 'start'
-$g/start/d
